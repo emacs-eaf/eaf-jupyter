@@ -26,7 +26,7 @@ from qtconsole import styles
 from qtconsole.rich_jupyter_widget import RichJupyterWidget
 from qtconsole.manager import QtKernelManager
 from core.buffer import Buffer
-from core.utils import interactive, get_emacs_var
+from core.utils import interactive, get_emacs_vars
 from core.kill_ring import EafKillRing
 
 class AppBuffer(Buffer):
@@ -36,10 +36,11 @@ class AppBuffer(Buffer):
         arguments_dict = json.loads(arguments)
         self.kernel = arguments_dict["kernel"]
 
-        font_size = get_emacs_var("eaf-jupyter-font-size")
-        font_family = get_emacs_var("eaf-jupyter-font-family")
+        (font_size, font_family) = get_emacs_vars(["eaf-jupyter-font-size", "eaf-jupyter-font-family"])
 
-        self.add_widget(EafJupyterWidget(self.kernel, font_size=font_size, font_family=font_family))
+        self.add_widget(EafJupyterWidget(self.kernel,
+                                         self.theme_background_color, self.theme_foreground_color,
+                                         font_size=font_size, font_family=font_family))
 
         QTimer.singleShot(500, self.focus_widget)
 
@@ -57,15 +58,14 @@ class AppBuffer(Buffer):
 
         super().destroy_buffer()
 
-
 class EafJupyterWidget(RichJupyterWidget):
-    def __init__(self, kernel, *args, **kwargs):
-        bg_color = get_emacs_var("eaf-emacs-theme-background-color")
-        fg_color = get_emacs_var("eaf-emacs-theme-foreground-color")
-        dark_mode = (get_emacs_var("eaf-jupyter-dark-mode") == "force" or \
-                     get_emacs_var("eaf-jupyter-dark-mode") == True or \
-                     (get_emacs_var("eaf-jupyter-dark-mode") == "follow" and get_emacs_var("eaf-emacs-theme-mode") == "dark"))
-        self._init_style(bg_color, fg_color, dark_mode)
+    def __init__(self, kernel, theme_background_color, theme_foreground_color, *args, **kwargs):
+        (jupyter_dark_mode, theme_mode) = get_emacs_vars(["eaf-jupyter-dark-mode", "eaf-emacs-theme-mode"])
+
+        dark_mode = (jupyter_dark_mode == "force" or \
+                     jupyter_dark_mode == True or \
+                     (jupyter_dark_mode == "follow" and theme_mode == "dark"))
+        self._init_style(theme_background_color, theme_foreground_color, dark_mode)
 
         self.scrollbar_visibility = False
 
