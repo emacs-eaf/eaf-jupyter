@@ -27,7 +27,7 @@ from qtconsole.rich_jupyter_widget import RichJupyterWidget
 from qtconsole.manager import QtKernelManager
 from core.buffer import Buffer
 from core.utils import interactive, get_emacs_vars
-from kill_ring import EafKillRing
+from app.jupyter.kill_ring import EafKillRing
 
 class AppBuffer(Buffer):
     def __init__(self, buffer_id, url, arguments):
