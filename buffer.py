@@ -26,7 +26,7 @@ from qtconsole import styles
 from qtconsole.rich_jupyter_widget import RichJupyterWidget
 from qtconsole.manager import QtKernelManager
 from core.buffer import Buffer
-from core.utils import interactive, get_emacs_vars
+from core.utils import interactive, get_emacs_vars, get_emacs_theme_mode
 from app.jupyter.kill_ring import EafKillRing
 
 class AppBuffer(Buffer):
@@ -60,7 +60,9 @@ class AppBuffer(Buffer):
 
 class EafJupyterWidget(RichJupyterWidget):
     def __init__(self, kernel, theme_background_color, theme_foreground_color, *args, **kwargs):
-        (jupyter_dark_mode, theme_mode) = get_emacs_vars(["eaf-jupyter-dark-mode", "eaf-emacs-theme-mode"])
+        (jupyter_dark_mode, ) = get_emacs_vars(["eaf-jupyter-dark-mode"])
+
+        self.theme_mode = get_emacs_theme_mode()
 
         dark_mode = (jupyter_dark_mode == "force" or \
                      jupyter_dark_mode == True or \
