@@ -66,7 +66,7 @@ class EafJupyterWidget(RichJupyterWidget):
 
         dark_mode = (jupyter_dark_mode == "force" or \
                      jupyter_dark_mode == True or \
-                     (jupyter_dark_mode == "follow" and theme_mode == "dark"))
+                     (jupyter_dark_mode == "follow" and self.theme_mode == "dark"))
         self._init_style(theme_background_color, theme_foreground_color, dark_mode)
 
         self.scrollbar_visibility = False
