@@ -1,19 +1,22 @@
 {
-    "pacman": [
-        "python-qtconsole"
-    ],
-    "apt": [
-        "python3-qtconsole"
-    ],
-    "dnf": [
-        "python3-qtconsole"
-    ],
-    "pkg": [
-        "py38-qtconsole"
-    ],
-    "pip": {
-        "win32": [
-            "qtconsole"
-        ]
-    }
+  "pacman": [
+    "python-qtconsole"
+  ],
+  "emerge": [
+    "dev-python/qtconsole"
+  ],
+  "apt": [
+    "python3-qtconsole"
+  ],
+  "dnf": [
+    "python3-qtconsole"
+  ],
+  "pkg": [
+    "py38-qtconsole"
+  ],
+  "pip": {
+    "win32": [
+      "qtconsole"
+    ]
+  }
 }
