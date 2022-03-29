@@ -28,8 +28,7 @@ except ImportError:
 
     Stolen from qtconsole.
     """
-    from PyQt5 import QtCore, QtWidgets, QtGui
-
+    from PyQt6 import QtCore, QtGui
 
     class KillRing(object):
         """ A generic Emacs-style kill ring.
@@ -83,6 +82,7 @@ except ImportError:
         def __init__(self, text_edit):
             """ Create a kill ring attached to the specified Qt text edit.
             """
+            from PyQt6 import QtWidgets
             assert isinstance(text_edit, (QtWidgets.QTextEdit, QtWidgets.QPlainTextEdit))
             super(QtKillRing, self).__init__()
 
