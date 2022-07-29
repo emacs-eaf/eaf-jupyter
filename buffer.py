@@ -59,7 +59,7 @@ class AppBuffer(Buffer):
 
 class EafJupyterWidget(RichJupyterWidget):
     def __init__(self, kernel, theme_background_color, theme_foreground_color, *args, **kwargs):
-        dark_mode = get_app_dark_mode("eaf-jupyter-dark_mode")
+        dark_mode = get_app_dark_mode("eaf-jupyter-dark-mode")
         self._init_style(theme_background_color, theme_foreground_color, dark_mode)
 
         self.scrollbar_visibility = False
