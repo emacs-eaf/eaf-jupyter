@@ -22,7 +22,7 @@
 from PyQt6.QtCore import QTimer
 from app.jupyter.kill_ring import EafKillRing
 from core.buffer import Buffer
-from core.utils import interactive, get_emacs_vars, get_app_dark_mode
+from core.utils import interactive, get_emacs_vars, get_app_dark_mode, get_emacs_theme_background, get_emacs_theme_foreground
 from qtconsole import styles
 from qtconsole.manager import QtKernelManager
 from qtconsole.rich_jupyter_widget import RichJupyterWidget
@@ -56,6 +56,13 @@ class AppBuffer(Buffer):
         self.buffer_widget.destroy()
 
         super().destroy_buffer()
+
+    @interactive
+    def update_theme(self):
+        self.theme_foreground_color = get_emacs_theme_foreground()
+        self.theme_background_color = get_emacs_theme_background()
+        dark_mode = get_app_dark_mode("eaf-jupyter-dark-mode")
+        self.buffer_widget._init_style(self.theme_background_color, self.theme_foreground_color, dark_mode)
 
 class EafJupyterWidget(RichJupyterWidget):
     def __init__(self, kernel, theme_background_color, theme_foreground_color, *args, **kwargs):
