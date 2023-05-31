@@ -22,7 +22,7 @@
 from PyQt6.QtCore import QTimer
 from app.jupyter.kill_ring import EafKillRing
 from core.buffer import Buffer
-from core.utils import interactive, get_emacs_vars, get_app_dark_mode, get_emacs_theme_background, get_emacs_theme_foreground
+from core.utils import *
 from qtconsole import styles
 from qtconsole.manager import QtKernelManager
 from qtconsole.rich_jupyter_widget import RichJupyterWidget
