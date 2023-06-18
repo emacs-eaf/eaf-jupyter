@@ -19,14 +19,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt6.QtCore import QTimer
+import json
+
 from app.jupyter.kill_ring import EafKillRing
 from core.buffer import Buffer
 from core.utils import *
+from PyQt6.QtCore import QTimer
 from qtconsole import styles
 from qtconsole.manager import QtKernelManager
 from qtconsole.rich_jupyter_widget import RichJupyterWidget
-import json
+
 
 class AppBuffer(Buffer):
     def __init__(self, buffer_id, url, arguments):
