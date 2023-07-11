@@ -128,15 +128,25 @@
 (add-to-list 'eaf-app-module-path-alist '("jupyter" . eaf-jupyter-module-path))
 
 ;;;###autoload
+(defun eaf-jupyter-read-data ()
+  (with-temp-buffer
+    (insert (shell-command-to-string (if (eaf--called-from-wsl-on-windows-p)
+                                         "jupyter.exe kernelspec list --json"
+                                       "jupyter kernelspec list --json")))
+    ;; We need search `{', make sure `json-read-from-string' read valid JSON data.
+    (goto-char (point-min))
+    (search-forward "{")
+    (backward-char)
+    (json-read-from-string (buffer-substring-no-properties (point) (point-max)))
+    ))
+
 (defun eaf-open-jupyter ()
   "Open jupyter."
   (interactive)
   (if (executable-find (if (eaf--called-from-wsl-on-windows-p)
                            "jupyter-qtconsole.exe"
                          "jupyter-qtconsole"))
-      (let* ((data (json-read-from-string (shell-command-to-string (if (eaf--called-from-wsl-on-windows-p)
-                                                                       "jupyter.exe kernelspec list --json"
-                                                                     "jupyter kernelspec list --json"))))
+      (let* ((data (eaf-jupyter-read-data))
              (kernel (completing-read "Jupyter Kernels: " (mapcar #'car (alist-get 'kernelspecs data))))
              (args (make-hash-table :test 'equal)))
         (puthash "kernel" kernel args)
