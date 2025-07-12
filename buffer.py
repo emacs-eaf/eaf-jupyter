@@ -21,13 +21,18 @@
 
 import json
 
-from app.jupyter.kill_ring import EafKillRing
 from core.buffer import Buffer
 from core.utils import *
 from PyQt6.QtCore import QTimer
 from qtconsole import styles
 from qtconsole.manager import QtKernelManager
 from qtconsole.rich_jupyter_widget import RichJupyterWidget
+
+import os
+import sys
+sys.path.append(os.path.dirname(__file__))
+
+from kill_ring import EafKillRing
 
 
 class AppBuffer(Buffer):
